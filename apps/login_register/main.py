@@ -1,15 +1,15 @@
 import typing
 from flet import (
-    AppBar, 
-    Icon, 
+    AppBar,
+    Icon,
     IconButton,
-    Page, 
+    Page,
     Row,
-    Text, 
-    TextButton, 
-    TextField, 
-    View, 
-    icons
+    Text,
+    TextButton,
+    TextField,
+    View,
+    icons,
 )
 
 
@@ -34,10 +34,7 @@ class HomeView(View):
         title.value = 'Welcome'
         title.style = 'displayMedium'
 
-        self.controls = [
-            app_bar,
-            Row([title], alignment='center')
-        ]
+        self.controls = [app_bar, Row([title], alignment='center')]
 
 
 class LoginView(View):
@@ -67,11 +64,11 @@ class LoginView(View):
         self.register_button.text = 'Dont have an account? Sign Up'
 
         self.controls = [
-            app_bar, 
-            self.username_field, 
-            self.password_field, 
+            app_bar,
+            self.username_field,
+            self.password_field,
             self.login_button,
-            self.register_button
+            self.register_button,
         ]
 
 
@@ -89,7 +86,7 @@ class RegisterView(View):
 
         self.fullname_field = TextField()
         self.fullname_field.label = 'Full Name'
-        
+
         self.email_field = TextField()
         self.email_field.label = 'E-mail'
 
@@ -120,7 +117,7 @@ class RegisterView(View):
             self.password1_field,
             self.password2_field,
             self.register_button,
-            self.login_button
+            self.login_button,
         ]
 
 
@@ -142,8 +139,12 @@ class MainView(View):
         self.login_button.on_click = lambda _: self.go_home_view()
         self.register_button.on_click = lambda _: self.go_home_view()
         self.logout_button.on_click = lambda _: self.go_login_view()
-        self.dont_have_account_button.on_click = lambda _: self.go_register_view()
-        self.already_have_account_button.on_click = lambda _: self.go_login_view()
+        self.dont_have_account_button.on_click = (
+            lambda _: self.go_register_view()
+        )
+        self.already_have_account_button.on_click = (
+            lambda _: self.go_login_view()
+        )
 
     @property
     def login_button(self) -> TextButton:
@@ -174,10 +175,10 @@ class MainView(View):
 
     def go_login_view(self) -> None:
         self.page.go('/login')
-    
+
     def go_register_view(self) -> None:
         self.page.go('/register')
-    
+
     def login_form(self) -> typing.Dict[typing.Any, typing.Any]:
         """
         Return a dict with login fields values.
@@ -193,7 +194,7 @@ class MainView(View):
         result['password'] = password or None
 
         return result
-    
+
     def register_form(self) -> typing.Dict[typing.Any, typing.Any]:
         """
         Return a dict with register fields values.
@@ -209,16 +210,16 @@ class MainView(View):
         username = username_field.value.strip()
         password1 = password1_field.value.strip()
         password2 = password2_field.value.strip()
-        
+
         result = {}
         result['fullname'] = fullname or None
         result['email'] = email or None
         result['username'] = username or None
         result['password1'] = password1 or None
         result['password2'] = password2 or None
-        
+
         return result
-    
+
     def clear_login_form(self) -> None:
         """
         Clear all login form fields.
@@ -244,7 +245,7 @@ def main(page: Page):
                 page.views.remove(view)
                 page.views.append(view)
                 break
-    
+
     page.on_route_change = route_change
     main_view = MainView(page)
     main_view.go_login_view()
@@ -252,6 +253,6 @@ def main(page: Page):
 
 if __name__ == '__main__':
     from flet import app, WEB_BROWSER
+
     # app(target=main, view=WEB_BROWSER)
     app(target=main)
-
